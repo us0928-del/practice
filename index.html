@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS 기초 10가지 기능 실습</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 30px auto; padding: 20px; line-height: 1.6; }
+        .box { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; background: #f9f9f9; }
+        button { cursor: pointer; padding: 6px 12px; margin: 4px 0; }
+        .dark-mode { background-color: #222; color: #fff; }
+        .dark-mode .box { background-color: #333; border-color: #555; }
+    </style>
+</head>
+<body>
+
+    <h1>JavaScript 10가지 핵심 기능 실습</h1>
+
+    <!-- 1. 화면 테마 변경 (다크모드) -->
+    <div class="box">
+        <h3>1. 다크모드 토글</h3>
+        <button onclick="toggleDarkMode()">테마 변경</button>
+    </div>
+
+    <!-- 2. 텍스트 변경 -->
+    <div class="box">
+        <h3>2. 텍스트 내용 바꾸기</h3>
+        <p id="textTarget">변경 전 텍스트입니다.</p>
+        <button onclick="changeText()">텍스트 변경</button>
+    </div>
+
+    <!-- 3. 카운터 (숫자 증가/감소) -->
+    <div class="box">
+        <h3>3. 카운터 (변수 연산)</h3>
+        <p>현재 값: <span id="countVal">0</span></p>
+        <button onclick="countUp()">+1 증가</button>
+        <button onclick="countDown()">-1 감소</button>
+    </div>
+
+    <!-- 4. 입력값 읽기 및 인사 -->
+    <div class="box">
+        <h3>4. 사용자 입력 받기</h3>
+        <input type="text" id="userName" placeholder="이름을 입력하세요">
+        <button onclick="greetUser()">인사하기</button>
+        <p id="greetResult"></p>
+    </div>
+
+    <!-- 5. 조건문 (입장 연령 확인) -->
+    <div class="box">
+        <h3>5. 조건문 (연령 확인)</h3>
+        <input type="number" id="userAge" placeholder="나이 입력">
+        <button onclick="checkAge()">확인</button>
+        <p id="ageResult"></p>
+    </div>
+
+    <!-- 6. 배열 & 반복문 (목록 출력) -->
+    <div class="box">
+        <h3>6. 목록 생성 (배열과 반복문)</h3>
+        <button onclick="renderList()">과일 목록 불러오기</button>
+        <ul id="fruitList"></ul>
+    </div>
+
+    <!-- 7. 요소 숨기기 / 나타내기 -->
+    <div class="box">
+        <h3>7. 요소 숨기기 / 보이기</h3>
+        <p id="secretBox">🙈 보였다가 숨겨지는 비밀 상자입니다!</p>
+        <button onclick="toggleVisibility()">비밀 상자 토글</button>
+    </div>
+
+    <!-- 8. 시계 (실시간 시간 표시) -->
+    <div class="box">
+        <h3>8. 타이머 (현재 시간)</h3>
+        <p id="clock">시간 불러오는 중...</p>
+    </div>
+
+    <!-- 9. 무작위 수 생성 (주사위) -->
+    <div class="box">
+        <h3>9. 주사위 굴리기 (난수 생성)</h3>
+        <button onclick="rollDice()">주사위 굴리기</button>
+        <p id="diceResult">결과: -</p>
+    </div>
+
+    <!-- 10. 콘솔 출력 (개발자 도구 확인) -->
+    <div class="box">
+        <h3>10. 콘솔 로그 출력</h3>
+        <button onclick="logToConsole()">F12 콘솔에 로그 남기기</button>
+    </div>
+
+    <script>
+        // 1. 다크모드
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // 2. 텍스트 변경
+        function changeText() {
+            document.getElementById('textTarget').innerText = '🎉 텍스트가 성공적으로 변경되었습니다!';
+        }
+
+        // 3. 카운터
+        let count = 0;
+        function countUp() {
+            count++;
+            document.getElementById('countVal').innerText = count;
+        }
+        function countDown() {
+            count--;
+            document.getElementById('countVal').innerText = count;
+        }
+
+        // 4. 입력값 처리
+        function greetUser() {
+            const name = document.getElementById('userName').value;
+            if (name.trim() === '') {
+                alert('이름을 입력해주세요!');
+                return;
+            }
+            document.getElementById('greetResult').innerText = `안녕하세요, ${name}님! 반갑습니당.`;
+        }
+
+        // 5. 조건문
+        function checkAge() {
+            const age = Number(document.getElementById('userAge').value);
+            const result = document.getElementById('ageResult');
+            if (age >= 19) {
+                result.innerText = '✅ 성인입니다. 입장 가능합니다.';
+            } else {
+                result.innerText = '🚫 미성년자입니다. 입장이 제한됩니다.';
+            }
+        }
+
+        // 6. 배열 및 반복문
+        function renderList() {
+            const fruits = ['사과', '바나나', '포도', '오렌지', '딸기'];
+            const ul = document.getElementById('fruitList');
+            ul.innerHTML = ''; // 기존 목록 초기화
+            
+            fruits.forEach(fruit => {
+                const li = document.createElement('li');
+                li.innerText = fruit;
+                ul.appendChild(li);
+            });
+        }
+
+        // 7. 요소 숨기기/보이기
+        function toggleVisibility() {
+            const target = document.getElementById('secretBox');
+            if (target.style.display === 'none') {
+                target.style.display = 'block';
+            } else {
+                target.style.display = 'none';
+            }
+        }
+
+        // 8. 실시간 시계
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000); // 1초마다 실행
+        updateClock();
+
+        // 9. 난수 생성 (1~6 주사위)
+        function rollDice() {
+            const dice = Math.floor(Math.random() * 6) + 1;
+            document.getElementById('diceResult').innerText = `결과: 🎲 ${dice}`;
+        }
+
+        // 10. 콘솔 출력
+        function logToConsole() {
+            console.log('F12를 눌러 개발자 도구를 열면 이 메시지가 보입니다!');
+            alert('F12 키를 눌러 [Console] 탭을 확인해보세요.');
+        }
+    </script>
+</body>
+</html>
